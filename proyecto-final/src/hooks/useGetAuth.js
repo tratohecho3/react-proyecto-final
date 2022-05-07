@@ -6,7 +6,7 @@ import {
   REACT_APP_SPOTIFY_CLIENT_ID,
   REACT_APP_SPOTIFY_CLIENT_SECRET,
 } from "../config";
-const useGetAuth = ({ clientId, clientSecret }) => {
+const useGetAuth = () => {
   const [accessToken, setAccessToken] = useState("");
   const getAuth = useCallback(async () => {
     const headers = {
@@ -22,13 +22,11 @@ const useGetAuth = ({ clientId, clientSecret }) => {
     });
     const data = await response.json();
     setAccessToken(data.access_token);
-  }, [clientId, clientSecret]);
+  }, []);
 
   useEffect(() => {
-    if (clientId && clientSecret) {
-      getAuth();
-    }
-  }, [clientId, clientSecret, getAuth]);
+    getAuth();
+  }, [getAuth]);
 
   return [accessToken];
 };

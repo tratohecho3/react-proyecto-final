@@ -1,10 +1,8 @@
 import useGetTrack from "./hooks/useGetTrack";
-import Track from "./components/Track/Track";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const App = () => {
-  const [track] = useGetTrack({ trackId: "2r6OAV3WsYtXuXjvJ1lIDi" });
-
-  return <Track track={track}></Track>;
+  return <Dashboard></Dashboard>;
 };
 
 export default App;

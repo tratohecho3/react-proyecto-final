@@ -5,9 +5,7 @@ import useGetAuth from "./useGetAuth";
 
 const useGetTrack = ({ trackId }) => {
   const [track, setTrack] = useState();
-  const clientId = "cc4e061f3d0344f29e7f171023f80d3c";
-  const clientSecret = "f8565989cc1b46f0b9e4b6f57295717a";
-  const [accessToken] = useGetAuth({ clientId, clientSecret });
+  const [accessToken] = useGetAuth();
   const getData = useCallback(async () => {
     const response = await fetch(`${URL_API_MAPPING[TRACKS]}/${trackId}`, {
       headers: {
