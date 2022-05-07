@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
-import { URL_API_MAPPING } from "../constants/urls";
-import { TRACKS } from "../constants/entities";
-import useGetAuth from "./useGetAuth";
+import { useEffect, useState, useCallback } from 'react';
+import { URL_API_MAPPING } from '../constants/urls';
+import { TRACKS } from '../constants/entities';
+import useGetAuth from './useGetAuth';
 
 const useGetTrack = ({ trackId }) => {
   const [track, setTrack] = useState();
@@ -9,7 +9,7 @@ const useGetTrack = ({ trackId }) => {
   const getData = useCallback(async () => {
     const response = await fetch(`${URL_API_MAPPING[TRACKS]}/${trackId}`, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
     });
