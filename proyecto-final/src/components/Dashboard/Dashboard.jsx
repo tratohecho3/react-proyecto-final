@@ -1,14 +1,15 @@
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, FormControl, Input, InputAdornment } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import { useState } from "react";
-import useSearchTracks from "../../hooks/useSearchTracks";
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, FormControl, Input, InputAdornment } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import { useState } from 'react';
+import useSearchTracks from '../../hooks/useSearchTracks';
+import TracksGrid from '../TracksGrid/TracksGrid';
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
   root: {
-    backgroundColor: palette.grey["900"],
-    height: "100vh",
-    width: "100%",
+    backgroundColor: palette.grey['900'],
+    height: '100vh',
+    width: '100%',
   },
   input: {
     backgroundColor: palette.common.white,
@@ -20,23 +21,17 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [tracks] = useSearchTracks({ query });
 
-  console.log(tracks);
   const handleSubmit = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       setQuery(event.target.value);
     }
   };
 
   return (
-    <Grid
-      container
-      className={classes.root}
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Grid container className={classes.root} justifyContent="center" alignItems="center">
       <FormControl>
         <Input
           startAdornment={
@@ -50,6 +45,7 @@ const Dashboard = () => {
           onKeyPress={handleSubmit}
         />
       </FormControl>
+      {query && tracks?.href && <TracksGrid {...tracks} />}
     </Grid>
   );
 };
