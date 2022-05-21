@@ -10,15 +10,13 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     backgroundColor: palette.grey['900'],
     height: ({ query }) => (query ? '100%' : '100vh'),
     width: '100%',
+    marginTop: ({ query }) => (query ? spacing(10) : 0),
   },
   input: {
     backgroundColor: palette.common.white,
     borderRadius: spacing(3),
     padding: spacing(1),
     width: spacing(50),
-  },
-  text: {
-    color: palette.common.white,
   },
 }));
 
@@ -47,7 +45,7 @@ const Dashboard = () => {
           disableUnderline
           onKeyPress={handleSubmit}
         />
-        <Typography variant="subtitle1" align="center" className={classes.text}>
+        <Typography variant="subtitle1" align="center">
           Presiona Enter Para buscar
         </Typography>
       </FormControl>
