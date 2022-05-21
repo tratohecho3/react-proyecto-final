@@ -1,17 +1,37 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Typography } from '@material-ui/core';
+import { Paper, Typography, Avatar } from '@material-ui/core';
 import { trackShape } from '../../proptypes';
 import { truncate } from '../../utils';
-const useStyles = makeStyles((theme) => ({
+import { PlayArrow } from '@material-ui/icons';
+
+const useStyles = makeStyles(({ palette, spacing, shadows }) => ({
   paper: {
-    padding: theme.spacing(1),
+    padding: spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: palette.text.secondary,
     whiteSpace: 'nowrap',
-    marginBottom: theme.spacing(1),
+    marginBottom: spacing(1),
+    position: 'relative',
+    '&:hover div': {
+      opacity: 1,
+    },
   },
   image: {
     width: '100%',
+  },
+  avatar: {
+    backgroundColor: palette.success.main,
+    position: 'absolute',
+    bottom: spacing(2),
+    right: spacing(2),
+    cursor: 'pointer',
+    opacity: 0,
+    transition: 'opacity 0.5s',
+    boxShadow: shadows[1],
+  },
+  icon: {
+    color: palette.grey['900'],
+    fontSize: spacing(4),
   },
 }));
 const Track = ({ track }) => {
@@ -21,6 +41,9 @@ const Track = ({ track }) => {
     <Paper className={classes.paper}>
       <Typography variant="subtitle1">{truncate(track.name)}</Typography>
       <img src={track.album.images[0].url} className={classes.image} />
+      <Avatar className={classes.avatar}>
+        <PlayArrow className={classes.icon}></PlayArrow>
+      </Avatar>
     </Paper>
   );
 };

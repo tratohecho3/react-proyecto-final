@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { trackShape } from '../../proptypes';
 import Track from '../Track/Track';
+
 const useStyles = makeStyles(({ spacing }) => ({
   root: {
     marginTop: spacing(5),
