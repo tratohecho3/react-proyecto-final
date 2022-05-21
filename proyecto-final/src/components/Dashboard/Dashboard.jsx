@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, FormControl, Input, InputAdornment } from '@material-ui/core';
+import { Grid, FormControl, Input, InputAdornment, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { useState } from 'react';
 import useSearchTracks from '../../hooks/useSearchTracks';
@@ -8,7 +8,7 @@ import TracksGrid from '../TracksGrid/TracksGrid';
 const useStyles = makeStyles(({ palette, spacing }) => ({
   root: {
     backgroundColor: palette.grey['900'],
-    height: '100vh',
+    height: ({ query }) => (query ? '100%' : '100vh'),
     width: '100%',
   },
   input: {
@@ -17,11 +17,14 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     padding: spacing(1),
     width: spacing(50),
   },
+  text: {
+    color: palette.common.white,
+  },
 }));
 
 const Dashboard = () => {
-  const classes = useStyles();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState();
+  const classes = useStyles({ query });
   const [tracks] = useSearchTracks({ query });
 
   const handleSubmit = (event) => {
@@ -44,6 +47,9 @@ const Dashboard = () => {
           disableUnderline
           onKeyPress={handleSubmit}
         />
+        <Typography variant="subtitle1" align="center" className={classes.text}>
+          Presiona Enter Para buscar
+        </Typography>
       </FormControl>
       {query && tracks?.href && <TracksGrid {...tracks} />}
     </Grid>

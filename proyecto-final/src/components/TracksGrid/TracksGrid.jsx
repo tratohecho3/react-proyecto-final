@@ -1,20 +1,21 @@
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Paper, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { trackShape } from '../../proptypes';
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    whiteSpace: 'nowrap',
-    marginBottom: theme.spacing(1),
-  },
-}));
+import Track from '../Track/Track';
+// const useStyles = makeStyles((theme) => ({
+//   paper: {
+//     padding: theme.spacing(1),
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary,
+//     whiteSpace: 'nowrap',
+//     marginBottom: theme.spacing(1),
+//   },
+// }));
 
 const TracksGrid = ({ items, total }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   console.log(items, total);
   if (total === 0) {
     return (
@@ -25,13 +26,17 @@ const TracksGrid = ({ items, total }) => {
   }
   return (
     <Grid container>
-      {items.map((item) => {
-        return (
-          <Grid item xs={3} key={item.id}>
-            <Paper className={classes.paper}>xs=3</Paper>
-          </Grid>
-        );
-      })}
+      <Grid item xs={2}></Grid>
+      <Grid item container xs={8} spacing={4}>
+        {items.map((item) => {
+          return (
+            <Grid item xs={3} key={item.id}>
+              <Track track={item} />
+            </Grid>
+          );
+        })}
+      </Grid>
+      <Grid item xs={2}></Grid>
     </Grid>
   );
 };
