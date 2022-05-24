@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, FormControl, Input, InputAdornment, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useSearchTracks from '../../hooks/useSearchTracks';
 import TracksGrid from '../TracksGrid/TracksGrid';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
   root: {
@@ -21,13 +22,19 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }));
 
 const Dashboard = () => {
+  const { searchTerm } = useParams();
+  let navigate = useNavigate();
   const [query, setQuery] = useState();
   const classes = useStyles({ query });
   const [tracks] = useSearchTracks({ query });
 
+  useEffect(() => {
+    setQuery(searchTerm);
+  }, [searchTerm]);
+
   const handleSubmit = (event) => {
     if (event.key === 'Enter') {
-      setQuery(event.target.value);
+      navigate(`/search/${event.target.value}`);
     }
   };
 
