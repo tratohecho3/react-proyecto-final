@@ -33,9 +33,13 @@ const Dashboard = () => {
   }, [searchTerm]);
 
   const handleSubmit = (event) => {
-    if (event.key === 'Enter') {
-      navigate(`/search/${event.target.value}`);
+    if (event.key !== 'Enter') {
+      return;
     }
+    if (event.target.value === '') {
+      return navigate('/');
+    }
+    return navigate(`/search/${event.target.value}`);
   };
 
   return (
