@@ -13,7 +13,6 @@ const useStyles = makeStyles(({ spacing }) => ({
 
 const TracksGrid = ({ items, total }) => {
   const classes = useStyles();
-  console.log(items, total);
   if (total === 0) {
     return (
       <Grid container>
