@@ -1,4 +1,4 @@
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext, useEffect } from 'react';
 import { AudioTrackContext } from '../../contexts/AudioTrack';
 import { Grid, makeStyles, Avatar, Slider, Typography } from '@material-ui/core';
 import { PlayArrow, Pause } from '@material-ui/icons';
@@ -23,6 +23,11 @@ const useStyles = makeStyles(({ palette, spacing, shadows, zIndex }) => ({
   currentTime: {
     marginRight: spacing(2),
   },
+  image: {
+    width: '100%',
+    maxWidth: spacing(8),
+    marginRight: spacing(2),
+  },
 }));
 
 const AudioPlayer = () => {
@@ -33,6 +38,11 @@ const AudioPlayer = () => {
   const [seekValue, setSeekValue] = useState(0);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
+  useEffect(() => {
+    setCurrentTime(0);
+    setSeekValue(0);
+    setIsAudioPlaying(true);
+  }, [audioTrack]);
   const play = () => {
     audioPlayer.current.play();
     setIsAudioPlaying(true);
@@ -59,7 +69,10 @@ const AudioPlayer = () => {
   }
   return (
     <Grid container className={classes.root}>
-      <Grid item xs={4}></Grid>
+      <Grid item xs={4} container wrap="nowrap" alignItems="center">
+        <img src={audioTrack.album.images[0].url} className={classes.image} />
+        <Typography variant="subtitle1">{audioTrack.name}</Typography>
+      </Grid>
       <Grid item xs={4}>
         <Grid container justifyContent="center" alignItems="center">
           {!isAudioPlaying && (
@@ -73,7 +86,7 @@ const AudioPlayer = () => {
             </Avatar>
           )}
         </Grid>
-        <audio src={audioTrack.preview_url} ref={audioPlayer} onTimeUpdate={onPlaying}>
+        <audio src={audioTrack.preview_url} ref={audioPlayer} onTimeUpdate={onPlaying} autoPlay>
           Your browser does not support the
           <code>audio</code> element.
         </audio>
