@@ -11,7 +11,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     backgroundColor: palette.grey['900'],
     height: ({ query }) => (query ? '100%' : '100vh'),
     width: '100%',
-    marginTop: ({ query }) => (query ? spacing(10) : 0),
+    marginTop: ({ query }) => (query ? spacing(20) : 0),
   },
   input: {
     backgroundColor: palette.common.white,
