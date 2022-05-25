@@ -1,7 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
+import { AudioTrackContext } from '../../contexts/AudioTrack';
 
 const AudioPlayer = () => {
   const audioPlayer = useRef();
+  const { audioTrack } = useContext(AudioTrackContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [seekValue, setSeekValue] = useState(0);
 
@@ -29,11 +31,7 @@ const AudioPlayer = () => {
 
   return (
     <div className="App">
-      <audio
-        src="https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3"
-        ref={audioPlayer}
-        onTimeUpdate={onPlaying}
-      >
+      <audio src={audioTrack?.preview_url} ref={audioPlayer} onTimeUpdate={onPlaying}>
         Your browser does not support the
         <code>audio</code> element.
       </audio>

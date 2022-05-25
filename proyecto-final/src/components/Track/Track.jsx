@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Typography, Avatar } from '@material-ui/core';
 import { trackShape } from '../../proptypes';
 import { truncate } from '../../utils';
-import { PlayArrow, PauseCircleFilled } from '@material-ui/icons';
+import { PlayArrow, Pause } from '@material-ui/icons';
+import { AudioTrackContext } from '../../contexts/AudioTrack';
 
 const useStyles = makeStyles(({ palette, spacing, shadows }) => ({
   paper: {
@@ -39,9 +40,12 @@ const Track = ({ track }) => {
   const classes = useStyles();
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const audioPlayer = useRef();
+  const { setAudioTrack } = useContext(AudioTrackContext);
+
   const playAudio = () => {
-    audioPlayer.current.play();
-    setIsAudioPlaying(true);
+    setAudioTrack(track);
+    // audioPlayer.current.play();
+    // setIsAudioPlaying(true);
   };
   const pauseAudio = () => {
     audioPlayer.current.pause();
@@ -60,7 +64,7 @@ const Track = ({ track }) => {
       )}
       {isAudioPlaying && (
         <Avatar className={classes.avatar}>
-          <PauseCircleFilled className={classes.icon} onClick={pauseAudio} />
+          <Pause className={classes.icon} onClick={pauseAudio} />
         </Avatar>
       )}
     </Paper>

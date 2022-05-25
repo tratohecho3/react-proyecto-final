@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import useSearchTracks from '../../hooks/useSearchTracks';
 import TracksGrid from '../TracksGrid/TracksGrid';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import AudioPlayer from '../AudioPlayer/AudioPlayer';
 const useStyles = makeStyles(({ palette, spacing }) => ({
   root: {
     backgroundColor: palette.grey['900'],
@@ -44,6 +44,7 @@ const Dashboard = () => {
 
   return (
     <Grid container className={classes.root} justifyContent="center" alignItems="center">
+      <AudioPlayer />
       <FormControl>
         <Input
           startAdornment={
