@@ -7,7 +7,7 @@ const useAudioPlayer = () => {
   const [seekValue, setSeekValue] = useState(0);
 
   const play = () => {
-    audioPlayer.current.play();
+    audioPlayer?.current?.play();
     setIsAudioPlaying(true);
   };
 
@@ -24,7 +24,7 @@ const useAudioPlayer = () => {
   const onTimelineChange = (e, newValue) => {
     const seekto = audioPlayer.current.duration * (+newValue / 100);
     audioPlayer.current.currentTime = seekto;
-    setSeekValue(e.target.value);
+    setSeekValue(newValue);
   };
 
   return {
