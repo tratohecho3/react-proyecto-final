@@ -22,8 +22,8 @@ const useAudioPlayer = () => {
   };
 
   const onTimelineChange = (e, newValue) => {
-    const seekto = audioPlayer.current.duration * (+newValue / 100);
-    audioPlayer.current.currentTime = seekto;
+    const newCurrentTime = audioPlayer.current.duration * (newValue / 100);
+    audioPlayer.current.currentTime = newCurrentTime;
     setSeekValue(newValue);
   };
 
