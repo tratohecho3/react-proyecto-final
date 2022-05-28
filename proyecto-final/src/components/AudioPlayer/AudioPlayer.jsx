@@ -1,7 +1,8 @@
-import { useRef, useState, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { AudioTrackContext } from '../../contexts/AudioTrack';
 import { Grid, makeStyles, Avatar, Slider, Typography } from '@material-ui/core';
 import { PlayArrow, Pause } from '@material-ui/icons';
+import useAudioPlayer from '../../hooks/useAudioPlayer';
 
 const useStyles = makeStyles(({ palette, spacing, shadows, zIndex }) => ({
   root: {
@@ -32,37 +33,26 @@ const useStyles = makeStyles(({ palette, spacing, shadows, zIndex }) => ({
 
 const AudioPlayer = () => {
   const classes = useStyles();
-  const audioPlayer = useRef();
-  const { audioTrack } = useContext(AudioTrackContext);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [seekValue, setSeekValue] = useState(0);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const { audioTrack, audioPlayer, isAudioPlaying, setIsAudioPlaying } =
+    useContext(AudioTrackContext);
+  const {
+    currentTime,
+    setCurrentTime,
+    seekValue,
+    setSeekValue,
+    play,
+    pause,
+    onPlaying,
+    onTimelineChange,
+  } = useAudioPlayer();
 
   useEffect(() => {
-    setCurrentTime(0);
-    setSeekValue(0);
-    setIsAudioPlaying(true);
+    if (audioTrack) {
+      setCurrentTime(0);
+      setSeekValue(0);
+      setIsAudioPlaying(true);
+    }
   }, [audioTrack]);
-  const play = () => {
-    audioPlayer.current.play();
-    setIsAudioPlaying(true);
-  };
-
-  const pause = () => {
-    audioPlayer.current.pause();
-    setIsAudioPlaying(false);
-  };
-
-  const onPlaying = () => {
-    setCurrentTime(audioPlayer.current.currentTime);
-    setSeekValue((audioPlayer.current.currentTime / audioPlayer.current.duration) * 100);
-  };
-
-  const onTimelineChange = (e, newValue) => {
-    const seekto = audioPlayer.current.duration * (+newValue / 100);
-    audioPlayer.current.currentTime = seekto;
-    setSeekValue(e.target.value);
-  };
 
   if (!audioTrack) {
     return null;

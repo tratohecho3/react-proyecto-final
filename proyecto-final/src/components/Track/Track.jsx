@@ -1,10 +1,11 @@
-import { useRef, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Typography, Avatar } from '@material-ui/core';
 import { trackShape } from '../../proptypes';
 import { truncate } from '../../utils';
 import { PlayArrow, Pause } from '@material-ui/icons';
 import { AudioTrackContext } from '../../contexts/AudioTrack';
+import useAudioPlayer from '../../hooks/useAudioPlayer';
 
 const useStyles = makeStyles(({ palette, spacing, shadows }) => ({
   paper: {
@@ -38,33 +39,26 @@ const useStyles = makeStyles(({ palette, spacing, shadows }) => ({
 }));
 const Track = ({ track }) => {
   const classes = useStyles();
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const audioPlayer = useRef();
-  const { setAudioTrack } = useContext(AudioTrackContext);
-
+  const { audioTrack, setAudioTrack, isAudioPlaying } = useContext(AudioTrackContext);
+  const { play, pause } = useAudioPlayer();
+  const showPauseButton = isAudioPlaying && audioTrack.id === track.id;
   const playAudio = () => {
     setAudioTrack(track);
-    // audioPlayer.current.play();
-    // setIsAudioPlaying(true);
-  };
-  const pauseAudio = () => {
-    audioPlayer.current.pause();
-    setIsAudioPlaying(false);
+    play();
   };
 
   return (
     <Paper className={classes.paper}>
       <Typography variant="subtitle1">{truncate(track.name)}</Typography>
       <img src={track.album.images[0].url} className={classes.image} />
-      <audio ref={audioPlayer} src={track.preview_url} />
-      {!isAudioPlaying && (
+      {!showPauseButton && (
         <Avatar className={classes.avatar}>
           <PlayArrow className={classes.icon} onClick={playAudio} />
         </Avatar>
       )}
-      {isAudioPlaying && (
+      {showPauseButton && (
         <Avatar className={classes.avatar}>
-          <Pause className={classes.icon} onClick={pauseAudio} />
+          <Pause className={classes.icon} onClick={pause} />
         </Avatar>
       )}
     </Paper>
